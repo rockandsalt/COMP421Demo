@@ -6,7 +6,8 @@ Created on Sat Mar 18 16:15:22 2017
 """
 
 import tkinter as tk
-
+from tkinter import ttk
+import db
 
 class dbGUI(tk.Frame):
     
@@ -15,7 +16,7 @@ class dbGUI(tk.Frame):
         root.title("COMP421 Demo")
         
         
-        n = tk.ttk.Notebook(root)
+        n = ttk.Notebook(root)
         
         f0 = tk.Frame(n, width = 200, height = 200)
         f1 = tk.Frame(n, width = 200, height=200)
@@ -25,15 +26,18 @@ class dbGUI(tk.Frame):
         n.add(f1, text="member")
         n.add(f2, text = "Plans")
         
-        connectDB = tk.ttk.Button(f0, text = "Connect DB")
-        DisconnectDB = tk.ttk.Button(f0, text = "Disconnect")
+        database = db.db()
+        
+        connectDB = ttk.Button(f0, text = "Connect DB", command = database.connectdb )
+        DisconnectDB = ttk.Button(f0, text = "Disconnect", command = database.disconnectdb)
         
         connectDB.grid(column = 0)
         DisconnectDB.grid(column = 0)   
         
         
         n.pack(fill = tk.X)
-        
+     
+    
 
 if __name__ == "__main__":
         root = tk.Tk()
