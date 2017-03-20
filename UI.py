@@ -28,11 +28,11 @@ class dbGUI(tk.Frame):
         
         database = db.db()
         
-        connectDB = ttk.Button(f0, text = "Connect DB", command = database.connectdb )
         DisconnectDB = ttk.Button(f0, text = "Disconnect", command = database.disconnectdb)
+        InitDB = ttk.Button(f0, text = "Init DB", command = database.initTable)
         
-        connectDB.grid(column = 0)
-        DisconnectDB.grid(column = 0)   
+        DisconnectDB.grid(column = 0)
+        InitDB.grid(column = 0)
         
         
         n.pack(fill = tk.X)
