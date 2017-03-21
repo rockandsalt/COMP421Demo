@@ -2,6 +2,7 @@
 
 import psycopg2
 import sys
+import datetime
 
 class db():
     
@@ -35,4 +36,13 @@ class db():
             print(self.cursor.query)
         except Exception as e:
             print('*** DB failed to initialise: %r'%(e))
+            sys.exit(1)
+            
+    def addMember(self, mname, houseNum, street, city, phone, postalCode):
+        try:
+            query = "INSERT INTO Members VALUES (%(name)s,%(hNum)s,%(st)s,%(city)s,%(phone)s,%(pCode)s, %(rDate)s);"
+            self.cursor.execute(query, 
+                {'name': mname, 'hNum': houseNum, 'st':street, 'phone':phone, 'pCode':postalCode, 'rDate': datetime.datetime.today()})   
+        except Exception as e:
+            print('*** Member Insertion FailedL %r'%(e))
             sys.exit(1)
