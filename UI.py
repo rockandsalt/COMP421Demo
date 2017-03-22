@@ -12,16 +12,19 @@ import db
 class dbGUI(tk.Frame):
     
     def __init__(self,root):
+        #Master canvas
         self.root = root
         root.title("COMP421 Demo")
         
-        
+        #Creates the tab master object
         n = ttk.Notebook(root)
         
+        #assign a canvas each individual small tab
         f0 = tk.Frame(n, width = 200, height = 200)
         f1 = tk.Frame(n, width = 200, height=200)
         f2 = tk.Frame(n, width=200, height=200)
         
+        #a tab and name
         n.add(f0, text = "DB")
         n.add(f1, text="member")
         n.add(f2, text = "Plans")
