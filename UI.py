@@ -23,13 +23,13 @@ class dbGUI(tk.Frame):
         f0 = tk.Frame(n, width = 200, height = 200)
         f1 = tk.Frame(n, width = 200, height = 200)
         f2 = tk.Frame(n, width = 200, height = 200)
-        f3 = tl.Frame(n, width = 200, height = 200)
+        f3 = tk.Frame(n, width = 200, height = 200)
         
         #a tab and name
         n.add(f0, text = "DB")
         n.add(f1, text="member")
         n.add(f2, text = "Plans")
-	n.add(f3, text = "Classes")
+        n.add(f3, text = "Classes")
         
         self.database = db.db()
         
@@ -61,8 +61,7 @@ class dbGUI(tk.Frame):
         MemberPhoneL = ttk.Label(f1, text = "Phone")
         self.MemberPhone = ttk.Entry(f1)
     
-        AddMemberButton = ttk.Button(f1, text ="Add", command = self.addMemCallback
-)        
+        AddMemberButton = ttk.Button(f1, text ="Add", command = self.addMemCallback)        
         
 	#member grid
 
@@ -85,57 +84,57 @@ class dbGUI(tk.Frame):
         AddMemberButton.grid(column = 1 , row = 7)
 
 
-	#class entrys
-
-	classNameL = ttk.Label(f3, text = "Class Name")
-	self.className = ttk.Entry(f3)
-
-	classFreqL = ttk.Label(f3, text = "Frequency")
-	self.classFreq = ttk.Entry(f3)
-
-	classFirDayL = ttk.Label(f3, text = "First Day")
-	self.classFirDay = ttk.Entry(f3)
-
-	classTimeL = ttk.Label(f3, text = "Time")
-	self.classTime = ttk.Entry(f3)
-
-	classDurL = ttk.Label(f3, text = "Duration")
-	self.classDur = ttk.Entry(f3)
-
-	cmaxEnrollL = ttk.Label(f3, text = "Max Enrollment")
-	self.cmaxEnroll = ttk.Entry(f3)
-
-	cRoomL = ttk.Label(f3, text = "Room Number")
-	self.cRoom = ttk.Entry(f3)
-
-	cTaughtL = ttk.Label(f3, text = "Taught by")
-	self.cTaught = ttk.Entry(f3)
-
-	AddClassesButton = ttk.Button(f3,text = "Add", command = self.addClassCallback)
-	
+        	#class entrys
+        
+        classNameL = ttk.Label(f3, text = "Class Name")
+        self.className = ttk.Entry(f3)
+        
+        classFreqL = ttk.Label(f3, text = "Frequency")
+        self.classFreq = ttk.Entry(f3)
+        
+        classFirDayL = ttk.Label(f3, text = "First Day")
+        self.classFirDay = ttk.Entry(f3)
+        
+        classTimeL = ttk.Label(f3, text = "Time")
+        self.classTime = ttk.Entry(f3)
+        
+        classDurL = ttk.Label(f3, text = "Duration")
+        self.classDur = ttk.Entry(f3)
+        
+        cmaxEnrollL = ttk.Label(f3, text = "Max Enrollment")
+        self.cmaxEnroll = ttk.Entry(f3)
+        
+        cRoomL = ttk.Label(f3, text = "Room Number")
+        self.cRoom = ttk.Entry(f3)
+        
+        cTaughtL = ttk.Label(f3, text = "Taught by")
+        self.cTaught = ttk.Entry(f3)
+        
+        AddClassesButton = ttk.Button(f3,text = "Add", command = self.addClassCallback)
+        	
         #class grid
-
-	classNameL.grid(column =0 , row = 0)
+        
+        classNameL.grid(column =0 , row = 0)
         self.className.grid(column = 0 , row = 1)
-	classFreqL.grid(column =0 , row = 2)
+        classFreqL.grid(column =0 , row = 2)
         self.classFreq.grid(column = 0 , row = 3)
-
-	classFirDayL.grid(column =1 , row = 0)
+        
+        classFirDayL.grid(column =1 , row = 0)
         self.classFirDay.grid(column = 1 , row = 1)
-	classTimeL.grid(column =1 , row = 2)
+        classTimeL.grid(column =1 , row = 2)
         self.classTime.grid(column = 1 , row = 3)
-
-	classDurL.grid(column =2 , row = 0)
+        
+        classDurL.grid(column =2 , row = 0)
         self.classDur.grid(column = 2 , row = 1)
-	cmaxEnrollL.grid(column =2 , row = 2)
+        cmaxEnrollL.grid(column =2 , row = 2)
         self.cmaxEnroll.grid(column = 2 , row = 3)
-
-	cRoomL.grid(column =3 , row = 0)
+        
+        cRoomL.grid(column =3 , row = 0)
         self.cRoom.grid(column = 3 , row = 1)
-	cTaughtL.grid(column =3 , row = 2)
+        cTaughtL.grid(column =3 , row = 2)
         self.cTaught.grid(column = 3 , row = 3)
-
-	AddClassesButton.grid(column = 4, row = 0)
+        
+        AddClassesButton.grid(column = 4, row = 0)
         
 
 
@@ -159,19 +158,19 @@ class dbGUI(tk.Frame):
 
 
     def addClassCallback(self):
-	cname = self.className.get()
-	cfreq = self.classFreq.get()
-	cfirday = self.classFirDay.get()
-	ctime = self.classTime.get()
-	cdur = self.classDur.get()
-	cmax = self.cmaxEnroll.get()
-	croom = self.cRoom.get()
-	ctaughtby = self.cTaught.get()
+        cname = self.className.get()
+        cfreq = self.classFreq.get()
+        cfirday = self.classFirDay.get()
+        ctime = self.classTime.get()
+        cdur = self.classDur.get()
+        cmax = self.cmaxEnroll.get()
+        croom = self.cRoom.get()
+        ctaughtby = self.cTaught.get()
 
-	if(not cname and not cfreq and not cfirday and not ctime and not cdur and not cmax and not croom and not ctaughtby):
-	    print ("Some Inputs are Empty!")
+        if(not cname and not cfreq and not cfirday and not ctime and not cdur and not cmax and not croom and not ctaughtby):
+            print ("Some Inputs are Empty!")
 
-	self.database.addClass(cname,cfreq,cfirday,cdur,cmax,croom,ctaughtby)
+        self.database.addClass(cname,cfreq,cfirday,cdur,cmax,croom,ctaughtby)
 
         
 
