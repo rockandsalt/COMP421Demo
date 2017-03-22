@@ -48,10 +48,9 @@ class db():
             sys.exit(1)
 
     def addClass(self, Cname, CFrequency, CFirstDAY, CTime, CDuration, CMaxEnroll, CRoom, TaughtBy):
-	try:
-	    query = "INSERT INTO Classes VALUES (%(cname)s,%(cfreq)s,%(cfirday)s,%(ctime)s,%(cdur)s,%(cmax)s,%(croom)s,%(taught)s);"
-	    self.cursor.execute(query,
-                {'cname': Cname, 'cfreq': CFrequency, 'cfirday': CFirstDAY, 'ctime': CTime, 'cdur': CDuration, 'cmax': CMaxEnroll, 'croom': CRoom, 'taught': TaughtBy})
-	except Exception as e:
-	    print('*** Class Inerstion Failed %r'%(e))
+        try:
+            query = "INSERT INTO Classes VALUES (%(cname)s,%(cfreq)s,%(cfirday)s,%(ctime)s,%(cdur)s,%(cmax)s,%(croom)s,%(taught)s);"
+            self.cursor.execute(query,{'cname': Cname, 'cfreq': CFrequency, 'cfirday': CFirstDAY, 'ctime': CTime, 'cdur': CDuration, 'cmax': CMaxEnroll, 'croom': CRoom, 'taught': TaughtBy})
+        except Exception as e:
+            print('*** Class Inerstion Failed %r'%(e))
             sys.exit(1)
