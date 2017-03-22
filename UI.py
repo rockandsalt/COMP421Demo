@@ -35,10 +35,11 @@ class dbGUI(tk.Frame):
         
         DisconnectDB = ttk.Button(f0, text = "Disconnect", command = self.database.disconnectdb)
         InitDB = ttk.Button(f0, text = "Init DB", command = self.database.initTable)
+        Quit = ttk.Button(f0, text = "quit", command = self.close_window)        
         
         DisconnectDB.grid(column = 0)
         InitDB.grid(column = 0)
-        
+        Quit.grid(column = 0)
 
 	#member Entrys
 
@@ -172,7 +173,8 @@ class dbGUI(tk.Frame):
 
         self.database.addClass(cname,cfreq,cfirday,cdur,cmax,croom,ctaughtby)
 
-        
+    def close_window(self): 
+        self.root.destroy()   
 
          
          
