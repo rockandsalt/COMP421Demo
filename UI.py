@@ -26,17 +26,74 @@ class dbGUI(tk.Frame):
         n.add(f1, text="member")
         n.add(f2, text = "Plans")
         
-        database = db.db()
+        self.database = db.db()
         
-        DisconnectDB = ttk.Button(f0, text = "Disconnect", command = database.disconnectdb)
-        InitDB = ttk.Button(f0, text = "Init DB", command = database.initTable)
+        DisconnectDB = ttk.Button(f0, text = "Disconnect", command = self.database.disconnectdb)
+        InitDB = ttk.Button(f0, text = "Init DB", command = self.database.initTable)
         
         DisconnectDB.grid(column = 0)
         InitDB.grid(column = 0)
         
+        MemberNameL = ttk.Label(f1, text = "Name")
+        self.MemberName = ttk.Entry(f1)
+        
+        MemberAddressL = ttk.Label(f1, text = "Address")
+        MemberAddressHouseNumL = ttk.Label(f1, text = "house #")
+        self.MemberAddressHouseNum = ttk.Entry(f1)
+        
+        MemberAddressHouseStreetL = ttk.Label(f1, text = "Street")
+        self.MemberAddressHouseStreet = ttk.Entry(f1)
+        
+        MemberAddressHouseCityL = ttk.Label(f1, text = "City")
+        self.MemberAddressHouseCity = ttk.Entry(f1)
+        
+        MemberAddressHousePostCodeL = ttk.Label(f1, text = "Postal Code")
+        self.MemberAddressHousePostCode = ttk.Entry(f1)
+        
+        MemberPhoneL = ttk.Label(f1, text = "Phone")
+        self.MemberPhone = ttk.Entry(f1)
+    
+        AddMemberButton = ttk.Button(f1, text ="Add", command = self.addMemCallback )        
+        
+        MemberNameL.grid(column =0 , row = 0)
+        self.MemberName.grid(column = 0 , row = 1)
+        
+        MemberAddressL.grid(column = 0 ,row =2)
+        MemberAddressHouseNumL.grid(column = 0 ,row =3)
+        self.MemberAddressHouseNum.grid(column = 0 , row = 4)
+        MemberAddressHouseStreetL.grid(column = 1, row = 3)
+        self.MemberAddressHouseStreet.grid(column = 1, row =4)
+        MemberAddressHouseCityL.grid(column = 2, row = 3)
+        self.MemberAddressHouseCity.grid(column = 2, row = 4)        
+        MemberAddressHousePostCodeL.grid(column = 3 , row = 3)
+        self.MemberAddressHousePostCode.grid(column = 3 , row = 4)
+        
+        MemberPhoneL.grid(column = 1, row = 0)
+        self.MemberPhone.grid(column = 1 , row = 1)
+        
+        AddMemberButton.grid(column = 1 , row = 7)
         
         n.pack(fill = tk.X)
-     
+        
+    def addMemCallback(self):
+        name = self.MemberName.get()
+        houseNum = self.MemberAddressHouseHum.get()
+        houseStreet = self.MemberAddressHouseStreet.get()
+        PostCode= self.MemberAddressHousePostCode.get()
+        HousePhone = self.MemberPhone.get()
+        City = self.MemberAddressHouseCity.get()
+        
+        if(not name and not houseNum and not houseStreet and not PostCode and not HousePhone and not City):
+            print("Some Input are Empty") 
+        
+        self.database.addMember(name,houseNum, houseStreet, City, HousePhone, PostCode)
+        
+        
+        
+
+         
+         
+         
     
 
 if __name__ == "__main__":
