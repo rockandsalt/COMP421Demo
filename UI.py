@@ -146,7 +146,7 @@ class dbGUI(tk.Frame):
         
     def addMemCallback(self):
         name = self.MemberName.get()
-        houseNum = self.MemberAddressHouseHum.get()
+        houseNum = self.MemberAddressHouseNum.get()
         houseStreet = self.MemberAddressHouseStreet.get()
         PostCode= self.MemberAddressHousePostCode.get()
         HousePhone = self.MemberPhone.get()

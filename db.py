@@ -40,9 +40,11 @@ class db():
             
     def addMember(self, mname, houseNum, street, city, phone, postalCode):
         try:
-            query = "INSERT INTO Members VALUES (%(name)s,%(hNum)s,%(st)s,%(city)s,%(phone)s,%(pCode)s, %(rDate)s);"
-            self.cursor.execute(query, 
-                {'name': mname, 'hNum': houseNum, 'st':street, 'phone':phone, 'pCode':postalCode, 'rDate': datetime.datetime.today()})   
+            query = "INSERT INTO Members (mname, HouseNum, Street, City, phone,PostalCode , regidate) VALUES (%(name)s,%(hNum)s,%(st)s,%(city)s,%(phone)s,%(pCode)s, %(rDate)s);"
+            str = self.cursor.mogrify(query, 
+                {'name': mname,'city':city, 'hNum': houseNum, 'st':street, 'phone':phone, 'pCode':postalCode, 'rDate': datetime.datetime.today()})
+            print(str)
+            self.conn.commit()
         except Exception as e:
             print('*** Member Insertion FailedL %r'%(e))
             sys.exit(1)
