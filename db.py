@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import psycopg2
+from psycopg2 import sql
 import sys
 import datetime
+from tabulate import tabulate
 
 class db():
     
@@ -57,9 +59,31 @@ class db():
             sys.exit(1)
     def searchMember(self, attribute, value):
         try:
-            query = "SELECT * FROM Members WHERE (%s) = (%s)"
-            self.cursor.execute(query, (attribute,value))
-            print(self.cursor.fetchmany())            
+            query = sql.SQL( "SELECT * FROM Members WHERE {} = %s ;").format(sql.Identifier(attribute))
+            self.cursor.execute(query, [value])
+            headers = ['mid', 'mname', 'HouseNum', 'Street', 'City', 'PostalCode','phone', 'regidate']
+            
+            self.prettyprintConsole(self.cursor.fetchall(),headers)           
         except Exception as e:
             print('*** Search Failed %r'%(e))
             sys.exit(1)
+    def addPlan(self, name, cost, freq):
+        try:
+            query = "INSERT INTO Plans (pname, cost, payment_frequency) VALUES (%s,%s,%s);"
+            self.cursor.execute(query, (name,cost,freq))
+            print("Insert Success")
+        except Exception as e:
+            print('*** Plan insertion failed %r'%(e))
+            sys.exit(1)
+            
+    def modifyMember(self, attribute, value, ID):
+        try:
+            query = "UPDATE Members %s = %s WHERE mid = (%s)"
+            self.cursor.execute(query, (attribute, value, ID))
+            print("Modification Success")
+        except Exception as e:
+            print('*** Member Modification failed %r'%(e))
+            sys.exit(1)
+            
+    def prettyprintConsole(self,Result, Header):
+         print(tabulate(Result, headers = Header))

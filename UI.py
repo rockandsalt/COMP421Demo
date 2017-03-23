@@ -65,15 +65,26 @@ class dbGUI(tk.Frame):
         AddMemberButton = ttk.Button(f1, text ="Add", command = self.addMemCallback)        
         
         FindMemberL = ttk.Label(f1, text = "Search Member by attribute")
-        
         self.FindMember = ttk.Entry(f1)
         attributeLabel = ttk.Label(f1,text = "Attribute : ")
         valueLabel = ttk.Label(f1,text = "Value: ")
         searchedAttribute =  tk.StringVar()
         MAttributeComboBox = ttk.Combobox(f1,textvariable = searchedAttribute)
-        MAttributeComboBox['values'] = ('mname','HouseNum','Street','City', 'PostalCode','phone')
+        MAttributeComboBox['values'] = ('mname','housenum','street','city', 'postalcode','phone')
         
         searchButton = ttk.Button(f1, text = "search", command = lambda : self.searchMember(MAttributeComboBox.get(), self.FindMember.get()))
+        
+        ModifyMemberL = ttk.Label(f1, text = "Modify Member")
+        MemberIDToModL = ttk.Label(f1, text = "ID: ")
+        self.MemberIDToMod = ttk.Entry(f1)
+        MemberToModAttributeL = ttk.Label(f1,text = "Attribute : ")
+        MemberToModValueL = ttk.Label(f1,text = "Value: ")
+        MemberToModValue = ttk.Entry(f1)
+        MemberToModAttribute =  tk.StringVar()
+        MModAttributeComboBox = ttk.Combobox(f1,textvariable = MemberToModAttribute)
+        MModAttributeComboBox['values'] = ('mname','housenum','street','city', 'postalcode','phone')
+        
+        ModifyButton = ttk.Button(f1, text = "Modify")        
         
 	#member grid
 
@@ -102,7 +113,40 @@ class dbGUI(tk.Frame):
         valueLabel.grid(column = 2 , row = 9)
         self.FindMember.grid(column = 3, row = 9)
         searchButton.grid(column = 0, row =10)
+        
+        ModifyMemberL.grid(column = 0 , row= 11, padx = 5, pady = 5)
+        MemberIDToModL.grid(column = 0, row = 12)
+        self.MemberIDToMod.grid(column = 1 , row = 12)
+        MemberToModAttributeL.grid(column = 2, row = 12)
+        MModAttributeComboBox.grid(column = 3, row = 12)
+        MemberToModValueL.grid(column = 4 , row = 12)
+        MemberToModValue.grid(column = 5, row =12)
+        ModifyButton.grid(column = 0 , row = 13, padx = 5, pady=5)
 
+        #Plan Entry
+        CreatePlanLabel = ttk.Label(f2, text = "Create Plan")
+        pNameLabel = ttk.Label(f2, text = "Name")
+        costLabel = ttk.Label(f2, text = "Cost")
+        PlanFreqLabel = ttk.Label(f2, text = "payment frequency")
+        AddPlanButton = ttk.Button(f2, text = "add Plan", command = self.addPlan)
+        
+        self.PlanNameEntryBox = ttk.Entry(f2)
+        self.PlanCostEntryBox = ttk.Entry(f2)
+        self.PlanPFreqEntryBox = ttk.Entry(f2)
+
+        #Plan Grid
+        CreatePlanLabel.grid(column = 0, row = 0,padx=5, pady=5) 
+        pNameLabel.grid(column = 0, row =1,padx=5, pady=5)
+        costLabel.grid(column = 1, row = 1,padx=5, pady=5)
+        PlanFreqLabel.grid(column = 2 , row = 1, padx=5, pady=5)
+        
+        self.PlanNameEntryBox.grid(column = 0, row =2)
+        self.PlanCostEntryBox.grid(column =1, row = 2)
+        self.PlanPFreqEntryBox.grid(column = 2, row = 2)
+        AddPlanButton.grid(column = 0 , row =3)
+        
+
+        
         	#class entrys
         
         classNameL = ttk.Label(f3, text = "Class Name")
@@ -198,7 +242,15 @@ class dbGUI(tk.Frame):
         if(attribute and value):
             self.database.searchMember(attribute,value)
         
+    def addPlan(self):
+        name = self.PlanNameEntryBox.get()
+        cost = self.PlanCostEntryBox.get()
+        freq = self.PlanPFreqEntryBox.get()
         
+        if(name and cost and freq):
+            self.database.addPlan(name, cost, freq)
+        else:
+            print("some input are empty")
 
          
          
