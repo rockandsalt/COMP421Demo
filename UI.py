@@ -161,60 +161,6 @@ class dbGUI(tk.Frame):
         AddPlanButton.grid(column = 0 , row =3)
         
 
-        
-        	#class entrys
-        
-        classNameL = ttk.Label(f3, text = "Class Name")
-        self.className = ttk.Entry(f3)
-        
-        classFreqL = ttk.Label(f3, text = "Frequency")
-        self.classFreq = ttk.Entry(f3)
-        
-        classFirDayL = ttk.Label(f3, text = "First Day")
-        self.classFirDay = ttk.Entry(f3)
-        
-        classTimeL = ttk.Label(f3, text = "Time")
-        self.classTime = ttk.Entry(f3)
-        
-        classDurL = ttk.Label(f3, text = "Duration")
-        self.classDur = ttk.Entry(f3)
-        
-        cmaxEnrollL = ttk.Label(f3, text = "Max Enrollment")
-        self.cmaxEnroll = ttk.Entry(f3)
-        
-        cRoomL = ttk.Label(f3, text = "Room Number")
-        self.cRoom = ttk.Entry(f3)
-        
-        cTaughtL = ttk.Label(f3, text = "Taught by")
-        self.cTaught = ttk.Entry(f3)
-        
-        AddClassesButton = ttk.Button(f3,text = "Add", command = self.addClassCallback)
-        	
-        #class grid
-        
-        classNameL.grid(column =0 , row = 0)
-        self.className.grid(column = 0 , row = 1)
-        classFreqL.grid(column =0 , row = 2)
-        self.classFreq.grid(column = 0 , row = 3)
-        
-        classFirDayL.grid(column =1 , row = 0)
-        self.classFirDay.grid(column = 1 , row = 1)
-        classTimeL.grid(column =1 , row = 2)
-        self.classTime.grid(column = 1 , row = 3)
-        
-        classDurL.grid(column =2 , row = 0)
-        self.classDur.grid(column = 2 , row = 1)
-        cmaxEnrollL.grid(column =2 , row = 2)
-        self.cmaxEnroll.grid(column = 2 , row = 3)
-        
-        cRoomL.grid(column =3 , row = 0)
-        self.cRoom.grid(column = 3 , row = 1)
-        cTaughtL.grid(column =3 , row = 2)
-        self.cTaught.grid(column = 3 , row = 3)
-        
-        AddClassesButton.grid(column = 4, row = 0)
-        
-
 
 	#packing 
 
@@ -237,22 +183,6 @@ class dbGUI(tk.Frame):
             print("Some Input are Empty") 
         else:
             self.database.addMember(name,houseNum, houseStreet, City, HousePhone, PostCode)
-
-
-    def addClassCallback(self):
-        cname = self.className.get()
-        cfreq = self.classFreq.get()
-        cfirday = self.classFirDay.get()
-        ctime = self.classTime.get()
-        cdur = self.classDur.get()
-        cmax = self.cmaxEnroll.get()
-        croom = self.cRoom.get()
-        ctaughtby = self.cTaught.get()
-
-        if(not cname and not cfreq and not cfirday and not ctime and not cdur and not cmax and not croom and not ctaughtby):
-            print ("Some Inputs are Empty!")
-        else:
-            self.database.addClass(cname,cfreq,cfirday,cdur,cmax,croom,ctaughtby)
 
     def close_window(self): 
         self.root.destroy()
