@@ -12,6 +12,7 @@ class db():
         try:
             self.conn = psycopg2.connect(dbname="cs421", user="cs421g19", password='mSKUc"UK+9', 
                                          host = "comp421.cs.mcgill.ca")
+            self.conn.autocommit = True                             
             self.cursor = self.conn.cursor()
             print("db connection successful")               
         except Exception as e:
@@ -32,7 +33,6 @@ class db():
     def initTable(self):
         try:
             self.cursor.execute(open("projectsetup.sql", "r").read())
-            self.conn.commit()
             print(self.cursor.query)
         except Exception as e:
             print('*** DB failed to initialise: %r'%(e))
@@ -41,10 +41,9 @@ class db():
     def addMember(self, mname, houseNum, street, city, phone, postalCode):
         try:
             query = "INSERT INTO Members (mname, HouseNum, Street, City, phone,PostalCode , regidate) VALUES (%(name)s,%(hNum)s,%(st)s,%(city)s,%(phone)s,%(pCode)s, %(rDate)s);"
-            str = self.cursor.mogrify(query, 
+            self.cursor.execute(query, 
                 {'name': mname,'city':city, 'hNum': houseNum, 'st':street, 'phone':phone, 'pCode':postalCode, 'rDate': datetime.datetime.today()})
-            print(str)
-            self.conn.commit()
+            print("Insert Success")
         except Exception as e:
             print('*** Member Insertion FailedL %r'%(e))
             sys.exit(1)
