@@ -55,3 +55,11 @@ class db():
         except Exception as e:
             print('*** Class Inerstion Failed %r'%(e))
             sys.exit(1)
+    def searchMember(self, attribute, value):
+        try:
+            query = "SELECT * FROM Members WHERE (%s) = (%s)"
+            self.cursor.execute(query, (attribute,value))
+            print(self.cursor.fetchmany())            
+        except Exception as e:
+            print('*** Search Failed %r'%(e))
+            sys.exit(1)

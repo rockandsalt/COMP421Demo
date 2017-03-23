@@ -64,6 +64,17 @@ class dbGUI(tk.Frame):
     
         AddMemberButton = ttk.Button(f1, text ="Add", command = self.addMemCallback)        
         
+        FindMemberL = ttk.Label(f1, text = "Search Member by attribute")
+        
+        self.FindMember = ttk.Entry(f1)
+        attributeLabel = ttk.Label(f1,text = "Attribute : ")
+        valueLabel = ttk.Label(f1,text = "Value: ")
+        searchedAttribute =  tk.StringVar()
+        MAttributeComboBox = ttk.Combobox(f1,textvariable = searchedAttribute)
+        MAttributeComboBox['values'] = ('mname','HouseNum','Street','City', 'PostalCode','phone')
+        
+        searchButton = ttk.Button(f1, text = "search", command = lambda : self.searchMember(MAttributeComboBox.get(), self.FindMember.get()))
+        
 	#member grid
 
         MemberNameL.grid(column =0 , row = 0)
@@ -82,8 +93,15 @@ class dbGUI(tk.Frame):
         MemberPhoneL.grid(column = 1, row = 0)
         self.MemberPhone.grid(column = 1 , row = 1)
         
-        AddMemberButton.grid(column = 1 , row = 7)
-
+        AddMemberButton.grid(column = 1 , row = 7,padx=5, pady=5)
+        
+        FindMemberL.grid(column = 0, row = 8, padx = 5, pady = 5)
+        
+        attributeLabel.grid(column = 0, row = 9)
+        MAttributeComboBox.grid(column =1, row = 9 )
+        valueLabel.grid(column = 2 , row = 9)
+        self.FindMember.grid(column = 3, row = 9)
+        searchButton.grid(column = 0, row =10)
 
         	#class entrys
         
@@ -154,8 +172,8 @@ class dbGUI(tk.Frame):
         
         if(not name and not houseNum and not houseStreet and not PostCode and not HousePhone and not City):
             print("Some Input are Empty") 
-        
-        self.database.addMember(name,houseNum, houseStreet, City, HousePhone, PostCode)
+        else:
+            self.database.addMember(name,houseNum, houseStreet, City, HousePhone, PostCode)
 
 
     def addClassCallback(self):
@@ -170,11 +188,17 @@ class dbGUI(tk.Frame):
 
         if(not cname and not cfreq and not cfirday and not ctime and not cdur and not cmax and not croom and not ctaughtby):
             print ("Some Inputs are Empty!")
-
-        self.database.addClass(cname,cfreq,cfirday,cdur,cmax,croom,ctaughtby)
+        else:
+            self.database.addClass(cname,cfreq,cfirday,cdur,cmax,croom,ctaughtby)
 
     def close_window(self): 
-        self.root.destroy()   
+        self.root.destroy()
+    
+    def searchMember(self,attribute,value):
+        if(attribute and value):
+            self.database.searchMember(attribute,value)
+        
+        
 
          
          
@@ -182,6 +206,6 @@ class dbGUI(tk.Frame):
     
 
 if __name__ == "__main__":
-        root = tk.Tk()
-        UI = dbGUI(root)
-        root.mainloop()
+    root = tk.Tk()
+    UI = dbGUI(root)
+    root.mainloop()
