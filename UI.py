@@ -70,13 +70,13 @@ class dbGUI(tk.Frame):
         valueLabel = ttk.Label(f1,text = "Value: ")
         searchedAttribute =  tk.StringVar()
         MAttributeComboBox = ttk.Combobox(f1,textvariable = searchedAttribute)
-        MAttributeComboBox['values'] = ('mname','housenum','street','city', 'postalcode','phone')
+        MAttributeComboBox['values'] = ('mid','mname','housenum','street','city', 'postalcode','phone')
         
         searchButton = ttk.Button(f1, text = "search", command = lambda : self.searchMember(MAttributeComboBox.get(), self.FindMember.get()))
         
         ModifyMemberL = ttk.Label(f1, text = "Modify Member")
         MemberIDToModL = ttk.Label(f1, text = "ID: ")
-        self.MemberIDToMod = ttk.Entry(f1)
+        MemberIDToMod = ttk.Entry(f1)
         MemberToModAttributeL = ttk.Label(f1,text = "Attribute : ")
         MemberToModValueL = ttk.Label(f1,text = "Value: ")
         MemberToModValue = ttk.Entry(f1)
@@ -84,7 +84,7 @@ class dbGUI(tk.Frame):
         MModAttributeComboBox = ttk.Combobox(f1,textvariable = MemberToModAttribute)
         MModAttributeComboBox['values'] = ('mname','housenum','street','city', 'postalcode','phone')
         
-        ModifyButton = ttk.Button(f1, text = "Modify")        
+        ModifyButton = ttk.Button(f1, text = "Modify", command = lambda : self.modifyMember(MemberIDToMod.get(),MModAttributeComboBox.get(), MemberToModValue.get()))        
         
 	#member grid
 
@@ -116,7 +116,7 @@ class dbGUI(tk.Frame):
         
         ModifyMemberL.grid(column = 0 , row= 11, padx = 5, pady = 5)
         MemberIDToModL.grid(column = 0, row = 12)
-        self.MemberIDToMod.grid(column = 1 , row = 12)
+        MemberIDToMod.grid(column = 1 , row = 12)
         MemberToModAttributeL.grid(column = 2, row = 12)
         MModAttributeComboBox.grid(column = 3, row = 12)
         MemberToModValueL.grid(column = 4 , row = 12)
@@ -251,6 +251,10 @@ class dbGUI(tk.Frame):
             self.database.addPlan(name, cost, freq)
         else:
             print("some input are empty")
+    def modifyMember(self,ID,attribute,value):
+        if(ID, attribute, value):
+            self.database.modifyMember(attribute,value,ID)
+        
 
          
          

@@ -78,8 +78,8 @@ class db():
             
     def modifyMember(self, attribute, value, ID):
         try:
-            query = "UPDATE Members %s = %s WHERE mid = (%s)"
-            self.cursor.execute(query, (attribute, value, ID))
+            query = sql.SQL("UPDATE Members SET {} = %s WHERE mid = %s").format(sql.Identifier(attribute))
+            self.cursor.execute(query, [value,ID])
             print("Modification Success")
         except Exception as e:
             print('*** Member Modification failed %r'%(e))
