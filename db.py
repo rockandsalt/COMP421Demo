@@ -52,7 +52,7 @@ class db():
 
     def addClass(self, Cname, CFrequency, CFirstDAY, CTime, CDuration, CMaxEnroll, CRoom, TaughtBy):
         try:
-            query = "INSERT INTO Classes VALUES (%(cname)s,%(cfreq)s,%(cfirday)s,%(ctime)s,%(cdur)s,%(cmax)s,%(croom)s,%(taught)s);"
+            query = "INSERT INTO Classes (Cname,CFrequency,CFirstDAY, Ctime, CDuration, CMaxEnroll, CRoom, TaughtBy) VALUES (%(cname)s,%(cfreq)s,%(cfirday)s,%(ctime)s,%(cdur)s,%(cmax)s,%(croom)s,%(taught)s);"
             self.cursor.execute(query,{'cname': Cname, 'cfreq': CFrequency, 'cfirday': CFirstDAY, 'ctime': CTime, 'cdur': CDuration, 'cmax': CMaxEnroll, 'croom': CRoom, 'taught': TaughtBy})
         except Exception as e:
             print('*** Class Inerstion Failed %r'%(e))
@@ -67,6 +67,7 @@ class db():
         except Exception as e:
             print('*** Search Failed %r'%(e))
             sys.exit(1)
+
     def addPlan(self, name, cost, freq):
         try:
             query = "INSERT INTO Plans (pname, cost, payment_frequency) VALUES (%s,%s,%s);"
@@ -102,3 +103,14 @@ class db():
             
     def prettyprintConsole(self,Result, Header):
          print(tabulate(Result, headers = Header))
+
+
+    def addInstructor(self, inName):
+        try:
+            query = "INSERT INTO Instructors (instructorname) VALUES (%(inName)s);"
+            self.cursor.execute(query, {'inName': inName})
+            print("Insert Success")
+        except Exception as e:
+            print('*** Instructor Insertion FailedL %r' % (e))
+            sys.exit(1)
+
