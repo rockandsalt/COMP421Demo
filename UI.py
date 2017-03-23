@@ -66,15 +66,34 @@ class dbGUI(tk.Frame):
         AddMemberButton = ttk.Button(f1, text ="Add", command = self.addMemCallback)        
         
         FindMemberL = ttk.Label(f1, text = "Search Member by attribute")
-        
         self.FindMember = ttk.Entry(f1)
         attributeLabel = ttk.Label(f1,text = "Attribute : ")
         valueLabel = ttk.Label(f1,text = "Value: ")
         searchedAttribute =  tk.StringVar()
         MAttributeComboBox = ttk.Combobox(f1,textvariable = searchedAttribute)
-        MAttributeComboBox['values'] = ('mname','HouseNum','Street','City', 'PostalCode','phone')
+        MAttributeComboBox['values'] = ('mid','mname','housenum','street','city', 'postalcode','phone')
         
         searchButton = ttk.Button(f1, text = "search", command = lambda : self.searchMember(MAttributeComboBox.get(), self.FindMember.get()))
+        
+        ModifyMemberL = ttk.Label(f1, text = "Modify Member")
+        MemberIDToModL = ttk.Label(f1, text = "ID: ")
+        MemberIDToMod = ttk.Entry(f1)
+        MemberToModAttributeL = ttk.Label(f1,text = "Attribute : ")
+        MemberToModValueL = ttk.Label(f1,text = "Value: ")
+        MemberToModValue = ttk.Entry(f1)
+        MemberToModAttribute =  tk.StringVar()
+        MModAttributeComboBox = ttk.Combobox(f1,textvariable = MemberToModAttribute)
+        MModAttributeComboBox['values'] = ('mname','housenum','street','city', 'postalcode','phone')
+        
+        ModifyButton = ttk.Button(f1, text = "Modify", command = lambda : self.modifyMember(MemberIDToMod.get(),MModAttributeComboBox.get(), MemberToModValue.get()))        
+        
+        AddPlanL = ttk.Label(f1, text = "Add Plan to member")
+        AddPlanIDL = ttk.Label(f1, text = "ID: ")
+        AddPlanID = ttk.Entry(f1)
+        self.PlanComboBox = ttk.Combobox(f1)
+        self.fillPlan()
+        AddPlanToMB = ttk.Button(f1, text = "add Plan", command = lambda: self.addMembership(AddPlanID.get(), self.PlanComboBox.get()))
+        
         
 	#member grid
 
@@ -103,57 +122,47 @@ class dbGUI(tk.Frame):
         valueLabel.grid(column = 2 , row = 9)
         self.FindMember.grid(column = 3, row = 9)
         searchButton.grid(column = 0, row =10)
+        
+        ModifyMemberL.grid(column = 0 , row= 11, padx = 5, pady = 5)
+        MemberIDToModL.grid(column = 0, row = 12)
+        MemberIDToMod.grid(column = 1 , row = 12)
+        MemberToModAttributeL.grid(column = 2, row = 12)
+        MModAttributeComboBox.grid(column = 3, row = 12)
+        MemberToModValueL.grid(column = 4 , row = 12)
+        MemberToModValue.grid(column = 5, row =12)
+        ModifyButton.grid(column = 0 , row = 13, padx = 5, pady=5)
+        
+        AddPlanL.grid(column = 0 , row = 14, padx=5, pady= 5)
+        AddPlanIDL.grid(column = 0 , row = 15)
+        AddPlanID.grid(column = 1 ,row = 15 )
+        self.PlanComboBox.grid(column = 2 , row = 15)
+        AddPlanToMB.grid(column =0 , row = 16, padx = 5, pady =5)
+        
 
-        	#class entrys
+        #Plan Entry
+        CreatePlanLabel = ttk.Label(f2, text = "Create Plan")
+        pNameLabel = ttk.Label(f2, text = "Name")
+        costLabel = ttk.Label(f2, text = "Cost")
+        PlanFreqLabel = ttk.Label(f2, text = "payment frequency")
+        AddPlanButton = ttk.Button(f2, text = "add Plan", command = self.addPlan)
         
-        classNameL = ttk.Label(f3, text = "Class Name")
-        self.className = ttk.Entry(f3)
+        self.PlanNameEntryBox = ttk.Entry(f2)
+        self.PlanCostEntryBox = ttk.Entry(f2)
+        self.PlanPFreqEntryBox = ttk.Entry(f2)
+
+        #Plan Grid
+        CreatePlanLabel.grid(column = 0, row = 0,padx=5, pady=5) 
+        pNameLabel.grid(column = 0, row =1,padx=5, pady=5)
+        costLabel.grid(column = 1, row = 1,padx=5, pady=5)
+        PlanFreqLabel.grid(column = 2 , row = 1, padx=5, pady=5)
         
-        classFreqL = ttk.Label(f3, text = "Frequency")
-        self.classFreq = ttk.Entry(f3)
+
+        self.PlanNameEntryBox.grid(column = 0, row =2)
+        self.PlanCostEntryBox.grid(column =1, row = 2)
+        self.PlanPFreqEntryBox.grid(column = 2, row = 2)
+        AddPlanButton.grid(column = 0 , row =3)
         
-        classFirDayL = ttk.Label(f3, text = "First Day")
-        self.classFirDay = ttk.Entry(f3)
-        
-        classTimeL = ttk.Label(f3, text = "Time")
-        self.classTime = ttk.Entry(f3)
-        
-        classDurL = ttk.Label(f3, text = "Duration")
-        self.classDur = ttk.Entry(f3)
-        
-        cmaxEnrollL = ttk.Label(f3, text = "Max Enrollment")
-        self.cmaxEnroll = ttk.Entry(f3)
-        
-        cRoomL = ttk.Label(f3, text = "Room Number")
-        self.cRoom = ttk.Entry(f3)
-        
-        cTaughtL = ttk.Label(f3, text = "Taught by")
-        self.cTaught = ttk.Entry(f3)
-        
-        AddClassesButton = ttk.Button(f3,text = "Add", command = self.addClassCallback)
-        	
-        #class grid
-        
-        classNameL.grid(column =0 , row = 0)
-        self.className.grid(column = 0 , row = 1)
-        classFreqL.grid(column =0 , row = 2)
-        self.classFreq.grid(column = 0 , row = 3)
-        
-        classFirDayL.grid(column =1 , row = 0)
-        self.classFirDay.grid(column = 1 , row = 1)
-        classTimeL.grid(column =1 , row = 2)
-        self.classTime.grid(column = 1 , row = 3)
-        
-        classDurL.grid(column =2 , row = 0)
-        self.classDur.grid(column = 2 , row = 1)
-        cmaxEnrollL.grid(column =2 , row = 2)
-        self.cmaxEnroll.grid(column = 2 , row = 3)
-        
-        cRoomL.grid(column =3 , row = 0)
-        self.cRoom.grid(column = 3 , row = 1)
-        cTaughtL.grid(column =3 , row = 2)
-        self.cTaught.grid(column = 3 , row = 3)
-        
+
         AddClassesButton.grid(column = 4, row = 0)
 
     #instructor entry
@@ -175,11 +184,16 @@ class dbGUI(tk.Frame):
         msg.grid(column=2, row=1)
 
 
+
 	#packing 
 
 	
         n.pack(fill = tk.X)
-        
+    
+    
+    
+    
+    
     def addMemCallback(self):
         name = self.MemberName.get()
         houseNum = self.MemberAddressHouseNum.get()
@@ -192,22 +206,6 @@ class dbGUI(tk.Frame):
             print("Some Input are Empty") 
         else:
             self.database.addMember(name,houseNum, houseStreet, City, HousePhone, PostCode)
-
-
-    def addClassCallback(self):
-        cname = self.className.get()
-        cfreq = self.classFreq.get()
-        cfirday = self.classFirDay.get()
-        ctime = self.classTime.get()
-        cdur = self.classDur.get()
-        cmax = self.cmaxEnroll.get()
-        croom = self.cRoom.get()
-        ctaughtby = self.cTaught.get()
-
-        if(not cname and not cfreq and not cfirday and not ctime and not cdur and not cmax and not croom and not ctaughtby):
-            print ("Some Inputs are Empty!")
-        else:
-            self.database.addClass(cname,cfreq,cfirday,cdur,cmax,croom,ctaughtby)
 
     def close_window(self): 
         self.root.destroy()
@@ -227,12 +225,26 @@ class dbGUI(tk.Frame):
             self.var.set("Instructor Added!")
 
         
+    def addPlan(self):
+        name = self.PlanNameEntryBox.get()
+        cost = self.PlanCostEntryBox.get()
+        freq = self.PlanPFreqEntryBox.get()
         
-
+        if(name and cost and freq):
+            self.database.addPlan(name, cost, freq)
+        else:
+            print("some input are empty")
+    def modifyMember(self,ID,attribute,value):
+        if(ID, attribute, value):
+            self.database.modifyMember(attribute,value,ID)
+           
+    def fillPlan(self):
+        PlanList = self.database.getPlan() 
+        self.PlanComboBox['values'] = PlanList 
          
-         
-         
-    
+    def addMembership(self, ID , pname):
+        self.database.addMembership(ID,pname)
+        
 
 if __name__ == "__main__":
     root = tk.Tk()

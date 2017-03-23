@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import psycopg2
+from psycopg2 import sql
 import sys
 import datetime
+from tabulate import tabulate
 
 class db():
     
@@ -57,12 +59,51 @@ class db():
             sys.exit(1)
     def searchMember(self, attribute, value):
         try:
-            query = "SELECT * FROM Members WHERE (%s) = (%s)"
-            self.cursor.execute(query, (attribute,value))
-            print(self.cursor.fetchmany())            
+            query = sql.SQL( "SELECT * FROM Members WHERE {} = %s ;").format(sql.Identifier(attribute))
+            self.cursor.execute(query, [value])
+            headers = ['mid', 'mname', 'HouseNum', 'Street', 'City', 'PostalCode','phone', 'regidate']
+            
+            self.prettyprintConsole(self.cursor.fetchall(),headers)           
         except Exception as e:
             print('*** Search Failed %r'%(e))
             sys.exit(1)
+
+    def addPlan(self, name, cost, freq):
+        try:
+            query = "INSERT INTO Plans (pname, cost, payment_frequency) VALUES (%s,%s,%s);"
+            self.cursor.execute(query, (name,cost,freq))
+            print("Insert Success")
+        except Exception as e:
+            print('*** Plan insertion failed %r'%(e))
+            sys.exit(1)
+            
+    def modifyMember(self, attribute, value, ID):
+        try:
+            query = sql.SQL("UPDATE Members SET {} = %s WHERE mid = %s").format(sql.Identifier(attribute))
+            self.cursor.execute(query, [value,ID])
+            print("Modification Success")
+        except Exception as e:
+            print('*** Member Modification failed %r'%(e))
+            sys.exit(1)
+    def getPlan(self):
+        try:
+            query = "SELECT pname FROM Plans;"
+            self.cursor.execute(query)
+            return self.cursor.fetchall()
+        except Exception as e:
+            print('*** error fetching plans %r'%(e))
+            sys.exit(1)
+    def addMembership(self,ID,pname):
+        try:
+            query = "INSERT INTO Memberships (mid,pname,pregidate) VALUES (%s,%s,%s);"
+            self.cursor.execute(query, [ID,pname,datetime.datetime.today()])
+            print("Membership Added")
+        except Exception as e:
+            print('*** error adding MemberShip plans %r'%(e))
+            
+    def prettyprintConsole(self,Result, Header):
+         print(tabulate(Result, headers = Header))
+
 
     def addInstructor(self, inName):
         try:
@@ -72,3 +113,4 @@ class db():
         except Exception as e:
             print('*** Instructor Insertion FailedL %r' % (e))
             sys.exit(1)
+
