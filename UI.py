@@ -86,6 +86,14 @@ class dbGUI(tk.Frame):
         
         ModifyButton = ttk.Button(f1, text = "Modify", command = lambda : self.modifyMember(MemberIDToMod.get(),MModAttributeComboBox.get(), MemberToModValue.get()))        
         
+        AddPlanL = ttk.Label(f1, text = "Add Plan to member")
+        AddPlanIDL = ttk.Label(f1, text = "ID: ")
+        AddPlanID = ttk.Entry(f1)
+        self.PlanComboBox = ttk.Combobox(f1)
+        self.fillPlan()
+        AddPlanToMB = ttk.Button(f1, text = "add Plan", command = lambda: self.addMembership(AddPlanID.get(), self.PlanComboBox.get()))
+        
+        
 	#member grid
 
         MemberNameL.grid(column =0 , row = 0)
@@ -122,6 +130,13 @@ class dbGUI(tk.Frame):
         MemberToModValueL.grid(column = 4 , row = 12)
         MemberToModValue.grid(column = 5, row =12)
         ModifyButton.grid(column = 0 , row = 13, padx = 5, pady=5)
+        
+        AddPlanL.grid(column = 0 , row = 14, padx=5, pady= 5)
+        AddPlanIDL.grid(column = 0 , row = 15)
+        AddPlanID.grid(column = 1 ,row = 15 )
+        self.PlanComboBox.grid(column = 2 , row = 15)
+        AddPlanToMB.grid(column =0 , row = 16, padx = 5, pady =5)
+        
 
         #Plan Entry
         CreatePlanLabel = ttk.Label(f2, text = "Create Plan")
@@ -205,7 +220,11 @@ class dbGUI(tk.Frame):
 
 	
         n.pack(fill = tk.X)
-        
+    
+    
+    
+    
+    
     def addMemCallback(self):
         name = self.MemberName.get()
         houseNum = self.MemberAddressHouseNum.get()
@@ -254,12 +273,14 @@ class dbGUI(tk.Frame):
     def modifyMember(self,ID,attribute,value):
         if(ID, attribute, value):
             self.database.modifyMember(attribute,value,ID)
+           
+    def fillPlan(self):
+        PlanList = self.database.getPlan() 
+        self.PlanComboBox['values'] = PlanList 
+         
+    def addMembership(self, ID , pname):
+        self.database.addMembership(ID,pname)
         
-
-         
-         
-         
-    
 
 if __name__ == "__main__":
     root = tk.Tk()

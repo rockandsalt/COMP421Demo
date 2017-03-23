@@ -84,6 +84,21 @@ class db():
         except Exception as e:
             print('*** Member Modification failed %r'%(e))
             sys.exit(1)
+    def getPlan(self):
+        try:
+            query = "SELECT pname FROM Plans;"
+            self.cursor.execute(query)
+            return self.cursor.fetchall()
+        except Exception as e:
+            print('*** error fetching plans %r'%(e))
+            sys.exit(1)
+    def addMembership(self,ID,pname):
+        try:
+            query = "INSERT INTO Memberships (mid,pname,pregidate) VALUES (%s,%s,%s);"
+            self.cursor.execute(query, [ID,pname,datetime.datetime.today()])
+            print("Membership Added")
+        except Exception as e:
+            print('*** error adding MemberShip plans %r'%(e))
             
     def prettyprintConsole(self,Result, Header):
          print(tabulate(Result, headers = Header))
