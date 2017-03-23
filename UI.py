@@ -24,13 +24,14 @@ class dbGUI(tk.Frame):
         f1 = tk.Frame(n, width = 200, height = 200)
         f2 = tk.Frame(n, width = 200, height = 200)
         f3 = tk.Frame(n, width = 200, height = 200)
+        f4 = tk.Frame(n, width = 200, height = 200)
         
         #a tab and name
         n.add(f0, text = "DB")
         n.add(f1, text="member")
         n.add(f2, text = "Plans")
         n.add(f3, text = "Classes")
-        
+        n.add(f4, text = "Instructor")
         self.database = db.db()
         
         DisconnectDB = ttk.Button(f0, text = "Disconnect", command = self.database.disconnectdb)
@@ -154,7 +155,24 @@ class dbGUI(tk.Frame):
         self.cTaught.grid(column = 3 , row = 3)
         
         AddClassesButton.grid(column = 4, row = 0)
-        
+
+    #instructor entry
+
+        self.var = tk.StringVar()
+
+        instructorNameL = ttk.Label(f4, text="Instructor Name")
+        self.instructorName = ttk.Entry(f4)
+        msg = ttk.Label(f4, textvariable=self.var, font="Helvetica 10 italic")
+
+        AddInstructorButton = ttk.Button(f4, text="Add", command=self.addInstructorCallback)
+
+        # class grid
+
+        instructorNameL.grid(column=0, row=0)
+        self.instructorName.grid(column=0, row=1)
+
+        AddInstructorButton.grid(column=1, row=1)
+        msg.grid(column=2, row=1)
 
 
 	#packing 
@@ -197,6 +215,17 @@ class dbGUI(tk.Frame):
     def searchMember(self,attribute,value):
         if(attribute and value):
             self.database.searchMember(attribute,value)
+
+    def addInstructorCallback(self):
+        iname = self.instructorName.get()
+
+        if(not iname):
+            print ("Please add Instructor Name")
+            self.var.set("Please add Instructor Name!")
+        else:
+            self.database.addInstructor(iname)
+            self.var.set("Instructor Added!")
+
         
         
 
