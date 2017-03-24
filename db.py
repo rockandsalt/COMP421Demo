@@ -63,3 +63,12 @@ class db():
         except Exception as e:
             print('*** Search Failed %r'%(e))
             sys.exit(1)
+
+    def addInstructor(self, inName):
+        try:
+            query = "INSERT INTO Instructors (instructorname) VALUES (%(inName)s);"
+            self.cursor.execute(query, {'inName': inName})
+            print("Insert Success")
+        except Exception as e:
+            print('*** Instructor Insertion FailedL %r' % (e))
+            sys.exit(1)
