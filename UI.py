@@ -23,14 +23,12 @@ class dbGUI(tk.Frame):
         f0 = tk.Frame(n, width = 200, height = 200)
         f1 = tk.Frame(n, width = 200, height = 200)
         f2 = tk.Frame(n, width = 200, height = 200)
-        f3 = tk.Frame(n, width = 200, height = 200)
         f4 = tk.Frame(n, width = 200, height = 200)
         
         #a tab and name
         n.add(f0, text = "DB")
         n.add(f1, text="member")
         n.add(f2, text = "Plans")
-        n.add(f3, text = "Classes")
         n.add(f4, text = "Instructor")
         self.database = db.db()
         
@@ -162,8 +160,6 @@ class dbGUI(tk.Frame):
         self.PlanPFreqEntryBox.grid(column = 2, row = 2)
         AddPlanButton.grid(column = 0 , row =3)
         
-
-        AddClassesButton.grid(column = 4, row = 0)
 
     #instructor entry
 
